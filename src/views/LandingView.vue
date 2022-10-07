@@ -1,3 +1,5 @@
+<style lang="scss" src="./LandingView.scss"></style>
+
 <template>
   <div class="landing">
     <!-- <div class="initial">
@@ -6,167 +8,143 @@
         <p class="initial-screen-app-name">MOTORBIKE</p>
         <p class="initial-screen-app-description">Ride Free</p>
       </div>
-    </div> -->
-    <div class="app-tour">
-      <div class="app-tour-contents">
-        <div class="skip-link">
-          <p>Skip</p>
+    </div>  -->
+    <Transition :name="`slide-${slideAnimationName}`">
+      <div v-if="!showRoyalQueryScreen" class="app-tour">
+        <div class="app-tour-contents">
+          <div class="skip-link">
+            <p v-if="!(landingScreenIndex === 2)" @click="handleButtonClick">
+              Skip
+            </p>
+          </div>
+          <div class="container">
+            <template
+              v-for="(item, index) in landingPageScreenInfo"
+              :key="index"
+            >
+              <Transition :name="`slide-${slideAnimationName}`">
+                <div
+                  v-if="index === landingScreenIndex"
+                  class="app-tour-contents-contents"
+                >
+                  <img
+                    :src="require(`@/assets/${item.image}`)"
+                    class="app-tour-img"
+                    alt="app-tour-image"
+                  />
+                  <div class="app-tour-info">
+                    <p class="app-tour-title">{{ item.title }}</p>
+                    <p class="app-tour-description">
+                      {{ item.description }}
+                    </p>
+                  </div>
+                  <div v-if="index === 2" class="btn-container">
+                    <button @click="handleButtonClick" class="btn btn-primary">
+                      REGISTER
+                    </button>
+                  </div>
+                  <div class="indicators">
+                    <div
+                      v-for="indicator in 3"
+                      :key="indicator"
+                      class="indicator-dot"
+                      :class="{ 'indicator-dot-lg': index + 1 === indicator }"
+                    ></div>
+                  </div>
+                </div>
+              </Transition>
+            </template>
+          </div>
         </div>
-        <template v-for="(item, index) in landingPageScreenInfo" :key="index">
-          <template v-if="item.showContent">
-            <img :src="require(`@/assets/${item.image}`)" alt="app-icon" />
-            <div class="app-tour-info">
-              <p class="app-tour-title">{{ item.title }}</p>
-              <p class="app-tour-description">
-                {{ item.description }}
-              </p>
-            </div>
-            <div class="indicators">
-              <div
-                v-for="indicator in 3"
-                :key="indicator"
-                class="indicator-dot"
-                :class="{ 'indicator-dot-lg': index + 1 === indicator }"
-              ></div>
-            </div>
-          </template>
-        </template>
       </div>
-    </div>
+      <div v-else class="app-tour royal-query">
+        <div class="app-tour-contents">
+          <div class="container">
+            <div class="app-tour-contents-contents">
+              <img
+                src="@/assets/Illustration4.png"
+                class="app-tour-img royal-query-img"
+                alt="app-tour-image"
+              />
+              <div class="app-tour-info royal-query-title-tour-info">
+                <p class="app-tour-title royal-query-title">
+                  Do you have a Royal Bike
+                </p>
+              </div>
+              <div class="btn-container choice-btn-container">
+                <button class="btn btn-primary">YES</button>
+                <button class="btn btn-secondary">NO</button>
+              </div>
+              <div class="footer-img-container">
+                <img
+                  src="@/assets/trees.png"
+                  class="app-tour-img tree-img"
+                  alt="app-tour-image"
+                />
+                <img
+                  src="@/assets/tree.png"
+                  class="app-tour-img tree-img"
+                  alt="app-tour-image"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { landingScreenData } from '@/utils/landing-screen-data'
 
 @Options({
   components: {},
 })
 export default class HomeView extends Vue {
-  landingPageScreenInfo = [
-    {
-      image: 'Illustration.png',
-      title: 'Ride Free',
-      description: 'Create a hassle free ride anytime and anywhere',
-      showContent: false,
-    },
-    {
-      image: 'Illustartion2.png',
-      title: 'Know your Bike',
-      description: 'Keep your bike fettle!',
-      showContent: true,
-    },
-    {
-      image: 'Illustration3.png',
-      title: 'Your Cart',
-      description: 'Book bike online and shop accessories',
-      showContent: false,
-    },
-  ]
+  landingPageScreenInfo = [...landingScreenData]
+  touchstartX = 0
+  touchendX = 0
+  landingScreenIndex = 0
+  slideAnimationName = 'left'
+  showRoyalQueryScreen = false
+
+  checkDirection() {
+    if (this.touchendX < this.touchstartX) {
+      this.slideAnimationName = 'left'
+      if (this.landingScreenIndex >= this.landingPageScreenInfo.length - 1) {
+        return
+      }
+      this.landingScreenIndex += 1
+    }
+
+    if (this.touchendX > this.touchstartX) {
+      this.slideAnimationName = 'right'
+      if (!this.landingScreenIndex) {
+        return
+      }
+      this.landingScreenIndex -= 1
+    }
+  }
+
+  updateLandingScreenData() {
+    document.addEventListener('touchstart', (e: TouchEvent) => {
+      this.touchstartX = e.changedTouches[0].screenX
+    })
+
+    document.addEventListener('touchend', (e: TouchEvent) => {
+      this.touchendX = e.changedTouches[0].screenX
+      this.checkDirection()
+    })
+  }
+
+  handleButtonClick() {
+    this.showRoyalQueryScreen = true
+  }
+
+  mounted() {
+    this.updateLandingScreenData()
+  }
 }
 </script>
-
-<style lang="scss">
-.landing {
-  min-height: 100vh;
-  @include flex-align-justify-center();
-
-  .initial {
-    bottom: 0px;
-    width: 100%;
-    background-image: $app-theme-gradient;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    @include flex-align-justify-center();
-
-    .initial-screen {
-      img {
-        width: auto;
-      }
-
-      p {
-        color: $white;
-        font-weight: 600;
-        text-align: center;
-        line-height: 3.5rem;
-      }
-
-      &-app-name {
-        font-size: 2.25rem;
-        font-family: 'Oswald', sans-serif;
-      }
-
-      &-app-description {
-        font-weight: 200;
-        font-size: 1.25rem;
-      }
-    }
-  }
-
-  .app-tour {
-    min-height: 100vh;
-    @include flex-align-justify-center();
-
-    .app-tour-contents {
-      min-height: 100vh;
-      flex-direction: column;
-      line-height: 29px;
-      @include flex-align-justify-center();
-
-      .skip-link {
-        width: 100%;
-        position: relative;
-        padding: 2rem 1rem;
-        font-size: 1rem;
-        color: $primary-orange;
-        font-weight: 600;
-        @include flex-align-justify-center();
-        justify-content: flex-end;
-      }
-
-      img {
-        width: 100vw;
-      }
-
-      .app-tour-info {
-        flex: 1;
-        text-align: center;
-        color: $gray;
-        @media only screen and (max-width: 600px) {
-          max-width: 12rem;
-        }
-
-        .app-tour-title {
-          padding-top: 2.5rem;
-          font-size: 1.5rem;
-        }
-        .app-tour-description {
-          padding-top: 2rem;
-          line-height: 1.2rem;
-          font-size: 1rem;
-        }
-      }
-
-      .indicators {
-        flex: 1;
-        display: flex;
-        min-width: 2.8rem;
-        justify-content: space-between;
-        align-items: center;
-
-        .indicator-dot {
-          background: $secondary-orange;
-          width: 0.75rem;
-          height: 0.75rem;
-          border-radius: 50%;
-        }
-
-        .indicator-dot-lg {
-          padding: 0.5rem;
-        }
-      }
-    }
-  }
-}
-</style>

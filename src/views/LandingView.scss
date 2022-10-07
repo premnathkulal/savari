@@ -1,0 +1,175 @@
+.landing {
+  overflow: hidden;
+  min-height: 100vh;
+  @include flex-align-justify-center();
+
+  .initial {
+    bottom: 0px;
+    width: 100%;
+    background-image: $app-theme-gradient;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    @include flex-align-justify-center();
+
+    .initial-screen {
+      img {
+        width: auto;
+      }
+
+      p {
+        color: $white;
+        font-weight: 600;
+        text-align: center;
+        line-height: 3.5rem;
+      }
+
+      &-app-name {
+        font-size: 2.25rem;
+        font-family: 'Oswald', sans-serif;
+      }
+
+      &-app-description {
+        font-weight: 200;
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .app-tour {
+    min-height: 100vh;
+    @include flex-align-justify-center();
+
+    .app-tour-contents {
+      min-height: 100vh;
+      flex-direction: column;
+      line-height: 29px;
+      @include flex-align-justify-center();
+
+      .skip-link {
+        width: 100%;
+        position: relative;
+        padding: 2rem 1rem;
+        font-size: 1rem;
+        color: $primary-orange;
+        font-weight: 600;
+        @include flex-align-justify-center();
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  min-height: 20rem;
+}
+
+.app-tour-contents-contents {
+  flex: 1;
+  @include flex-align-justify-center();
+  flex-direction: column;
+
+  .app-tour-img {
+    width: 100%;
+
+    @media only screen and (max-width: 600px) {
+      width: 100vw;
+    }
+  }
+
+  .royal-query-img {
+    padding: 4rem;
+    padding-bottom: 0;
+  }
+
+  .tree-img {
+    width: auto;
+    height: 100%;
+
+    // &:nth-child(2) {
+    //   align-self: flex-end;
+    // }
+  }
+
+  .royal-query-title-tour-info {
+    width: 100%;
+    max-width: unset !important;
+    padding: 1rem 2rem 0 2rem !important;
+
+    .royal-query-title {
+      width: 100%;
+      color: $primary-orange;
+      font-size: 2.3rem !important;
+      line-height: 3.2rem;
+      text-align: center;
+      font-weight: 500;
+      padding-top: 0 !important;
+    }
+  }
+
+  .app-tour-info {
+    flex: 1;
+    text-align: center;
+    color: $gray;
+
+    @media only screen and (max-width: 600px) {
+      max-width: 12rem;
+    }
+
+    .app-tour-title {
+      padding-top: 2.5rem;
+      font-size: 1.5rem;
+    }
+
+    .app-tour-description {
+      padding-top: 2rem;
+      line-height: 1.2rem;
+      font-size: 1rem;
+    }
+  }
+
+  .btn-container {
+    width: 100%;
+    padding: 1rem 2rem;
+  }
+
+  .choice-btn-container,
+  .footer-img-container {
+    flex: 1;
+    padding-bottom: 0;
+    @include flex-align-justify-center();
+    // justify-content: space-between;
+
+    .btn {
+      margin-left: 0.5rem;
+      max-width: 120px;
+    }
+  }
+
+  .footer-img-container {
+    width: 100%;
+    padding: 0 1rem;
+    justify-content: space-between;
+  }
+
+  .indicators {
+    flex: 1;
+    display: flex;
+    min-width: 2.8rem;
+    justify-content: space-between;
+    align-items: center;
+
+    .indicator-dot {
+      background: $secondary-orange;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+    }
+
+    .indicator-dot-lg {
+      padding: 0.5rem;
+    }
+  }
+}

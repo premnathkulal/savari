@@ -12,3 +12,43 @@
     @include flex-align-center();
     @include flex-justify-center();
 }
+
+// Button
+.btn {
+    width: 100%;
+    height: 2.8rem;
+    color: $white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+    letter-spacing: 0.5px;
+    border-radius: 1.25rem;
+    box-shadow: 0 2px 4px 0 rgba(126, 118, 118, 0.5);
+
+    &.btn-primary {
+        background: $app-button-gradient;
+    }
+
+    &.btn-secondary {
+        background: $dark-gray;
+    }
+
+    &.btn-plain {
+        border-radius: unset;
+    }
+
+    &.btn-circle {
+        border-radius: 50%;
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+
+    &.btn-outline {
+        box-sizing: border-box;
+        background: unset;
+        box-shadow: none;
+        color: $primary-orange;
+        border: 1px solid rgba($color: #A29D9D, $alpha: 0.43);
+    }
+
+}

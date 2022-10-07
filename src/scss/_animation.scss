@@ -1,0 +1,28 @@
+// Landing screen slide animation
+
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+    transition: opacity 0.25s ease;
+}
+
+.slide-left-enter-from {
+    opacity: 0;
+    transform: translateX(30px) rotate(-20deg);
+}
+
+.slide-left-leave-to {
+    opacity: 0;
+    transform: translateX(-30px) rotate(-20deg);
+}
+
+.slide-right-enter-from {
+    opacity: 0;
+    transform: translateX(30px) rotate(20deg);
+}
+
+.slide-right-leave-to {
+    opacity: 0;
+    transform: translateX(60px) rotate(20deg);
+}
