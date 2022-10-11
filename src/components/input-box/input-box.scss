@@ -1,0 +1,26 @@
+.input-box-container {
+    @include flex-align-justify-center();
+    border-bottom: 1px solid $dark-gray;
+    padding-bottom: 0.5rem;
+    color: $gray;
+    margin-top: 2.5rem;
+
+    .input-box {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        letter-spacing: 0;
+        line-height: 21px;
+    }
+
+    .input-box-icons {
+        padding-left: 14px;
+
+        &:first-child {
+            padding-right: 14px;
+            padding-left: 0;
+        }
+
+    }
+}

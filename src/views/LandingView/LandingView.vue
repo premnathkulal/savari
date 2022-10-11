@@ -1,15 +1,16 @@
 <style lang="scss" src="./LandingView.scss"></style>
+<script lang="ts" src="./LandingView.ts"></script>
 
 <template>
   <div class="landing">
-    <!-- <div class="initial">
+    <div v-if="showSplashScreen" class="initial">
       <div class="initial-screen">
         <img src="@/assets/appicon.png" alt="app-icon" />
         <p class="initial-screen-app-name">MOTORBIKE</p>
         <p class="initial-screen-app-description">Ride Free</p>
       </div>
-    </div>  -->
-    <Transition :name="`slide-${slideAnimationName}`">
+    </div>
+    <Transition v-else :name="`slide-${slideAnimationName}`">
       <div v-if="!showRoyalQueryScreen" class="app-tour">
         <div class="app-tour-contents">
           <div class="skip-link">
@@ -72,8 +73,18 @@
                 </p>
               </div>
               <div class="btn-container choice-btn-container">
-                <button class="btn btn-primary">YES</button>
-                <button class="btn btn-secondary">NO</button>
+                <button
+                  class="btn btn-primary"
+                  @click="handleRoyalBikeQuestion(true)"
+                >
+                  YES
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  @click="handleRoyalBikeQuestion(false)"
+                >
+                  NO
+                </button>
               </div>
               <div class="footer-img-container">
                 <img
@@ -94,57 +105,3 @@
     </Transition>
   </div>
 </template>
-
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import { landingScreenData } from '@/utils/landing-screen-data'
-
-@Options({
-  components: {},
-})
-export default class HomeView extends Vue {
-  landingPageScreenInfo = [...landingScreenData]
-  touchstartX = 0
-  touchendX = 0
-  landingScreenIndex = 0
-  slideAnimationName = 'left'
-  showRoyalQueryScreen = false
-
-  checkDirection() {
-    if (this.touchendX < this.touchstartX) {
-      this.slideAnimationName = 'left'
-      if (this.landingScreenIndex >= this.landingPageScreenInfo.length - 1) {
-        return
-      }
-      this.landingScreenIndex += 1
-    }
-
-    if (this.touchendX > this.touchstartX) {
-      this.slideAnimationName = 'right'
-      if (!this.landingScreenIndex) {
-        return
-      }
-      this.landingScreenIndex -= 1
-    }
-  }
-
-  updateLandingScreenData() {
-    document.addEventListener('touchstart', (e: TouchEvent) => {
-      this.touchstartX = e.changedTouches[0].screenX
-    })
-
-    document.addEventListener('touchend', (e: TouchEvent) => {
-      this.touchendX = e.changedTouches[0].screenX
-      this.checkDirection()
-    })
-  }
-
-  handleButtonClick() {
-    this.showRoyalQueryScreen = true
-  }
-
-  mounted() {
-    this.updateLandingScreenData()
-  }
-}
-</script>

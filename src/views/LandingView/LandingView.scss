@@ -6,6 +6,7 @@
   .initial {
     bottom: 0px;
     width: 100%;
+    min-height: 100vh;
     background-image: $app-theme-gradient;
     background-repeat: no-repeat;
     background-position: center;

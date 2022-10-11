@@ -1,21 +1,35 @@
+import { ViewName } from '@/constants/enum'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/LandingView.vue'
+import HomeView from '../views/LandingView/LandingView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
+    name: ViewName.HOME,
     component: HomeView,
   },
-  // {
-  //   path: "/about",
-  //   name: "about",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },
+  {
+    path: '/login',
+    name: ViewName.LOGIN,
+    // route level code-splitting
+    // this generates a separate chunk (login.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "login" */ '../views/LoginView/LoginView.vue'
+      ),
+  },
+  {
+    path: '/register',
+    name: ViewName.REGISTER,
+    // route level code-splitting
+    // this generates a separate chunk (login.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "login" */ '../views/RegisterView/RegisterView.vue'
+      ),
+  },
 ]
 
 const router = createRouter({
